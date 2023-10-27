@@ -1,0 +1,18 @@
+@import '../../shared//variable.scss';
+
+.InstructionsBlock {
+    padding: 35px 18px;
+    background-color: #fff;
+    max-width: 228px;
+    width: 100%;
+
+    h2 {
+        margin-bottom: 34px;
+        border-radius: 10px;
+        @include styles_text(12px, 600);
+    }
+
+    p {
+        @include styles_text(12px, 400);
+    }
+}

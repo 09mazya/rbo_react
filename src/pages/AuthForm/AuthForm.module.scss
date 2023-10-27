@@ -1,0 +1,65 @@
+.auth_form {
+    width: 98vw;
+    height: 95vh;
+    background-color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  
+    @media (max-width: 768px) {
+        padding: 10px;
+    }
+  }
+  
+  .auth_form__subtitle {
+    color: rgb(188, 184, 193);
+  }
+  
+  .auth_form__form {
+    width: 100%;
+    max-width: 360px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+  
+  form input {
+    font-family: "Roboto", sans-serif;
+    outline: 0;
+    width: 100%;
+    border: 1px solid #b3adad;
+    border-radius: 5px;
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+  }
+  
+  form button {
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    background: #1976d2;
+    width: 100%;
+    border: 0;
+    border-radius: 5px;
+    padding: 15px;
+    color: #FFFFFF;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  
+    &:hover, &:active, &:focus {
+        background: #43A047;
+    }
+  }
+  
+  .error_message {
+    color: red;
+    font-weight: 100;
+    font-size: 14px;
+    margin: 0 0 15px 10px;
+  }
+  

@@ -1,0 +1,9 @@
+@mixin styles_text($font_size, $font_weigth) {
+    color: #000;
+
+    font-family: Inter;
+    font-size: $font_size;
+    font-style: normal;
+    font-weight: $font_weigth;
+    line-height: normal;
+}
