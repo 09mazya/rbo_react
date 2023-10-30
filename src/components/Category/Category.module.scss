@@ -1,0 +1,28 @@
+@import "../../shared//variable.scss";
+
+.category_block {
+  padding: 20px;
+  padding-top: 0;
+  border-radius: 20px;
+
+  .title {
+    text-align: center;
+    border-radius: 5px;
+    margin-bottom: 22px;
+    padding: 10px;
+    background: #31b465;
+
+    @include styles_text(16px, 700);
+    color: #fff;
+  }
+  li {
+    cursor: pointer;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    margin-bottom: 22px;
+    list-style: none;
+    text-align: center;
+    @include styles_text(14px, 600);
+  }
+}
