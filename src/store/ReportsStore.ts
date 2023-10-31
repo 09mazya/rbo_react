@@ -10,12 +10,10 @@ class Reports {
   }
 
   filterReportsByType(type: string) {
-    this.filteredReports = this.reports.map((reportArray: any) => {
-      const newFilterData = reportArray.reports.filter((item: any) => {
+    this.filteredReports = this.reports.filter((reportArray: any) => {
+      return reportArray.reports.filter((item: any) => {
         return (item.type = type);
       });
-      console.log({ key: reportArray.key, newFilterData });
-      return { key: reportArray.key, newFilterData };
     });
     console.log(toJS(this.reports));
     console.log(toJS(this.filteredReports));
@@ -25,7 +23,7 @@ class Reports {
     // Проверяем, существует ли уже элемент с заданным ключом
     const existingReportIndex = this.reports.findIndex(
       (item: any) => item.key === key
-    );
+    );    
 
     if (existingReportIndex !== -1) {
       // Если элемент с таким ключом уже существует, добавляем новый report к существующему элементу
@@ -36,7 +34,7 @@ class Reports {
       this.reports.push(newReport);
     }
   }
-
+  
   async getAllReports() {
     try {
       const authToken = localStorage.getItem("token");
@@ -58,7 +56,7 @@ class Reports {
       if (response) {
         const dataInReports = response.data.response.reports[0];
         for (const key in dataInReports) {
-          console.log(toJS(dataInReports[key]));
+          // console.log(toJS(dataInReports[key]));
 
           dataInReports[key].map((report: any) => {
             this.addReport(report, key);
