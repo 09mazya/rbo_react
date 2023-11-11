@@ -58,6 +58,7 @@ class Reports {
         for (const key in dataInReports) {
           // console.log(toJS(dataInReports[key]));
 
+          console.log(dataInReports)
           dataInReports[key].map((report: any) => {
             this.addReport(report, key);
           });

@@ -1,33 +1,34 @@
-import React, { useState } from "react";
-import Calendar, { CalendarProps } from "react-calendar";
-import "react-calendar/dist/Calendar.css";
-import s from './DataPicker.module.scss'
+import { RangeDatepicker } from "chakra-dayzed-datepicker";
+import { useState } from "react";
 
-const DateRangeCalendar: React.FC = () => {
-  const [selectedDateRange, setSelectedDateRange] = useState<Date[] | null>(null);
-
-  const handleDateChange = (date: Date[] | null) => {
-    if (date) {
-      setSelectedDateRange(date);
-    } else {
-      setSelectedDateRange(null);
-    }
-  };
-
-  const maxDate = new Date();
-  maxDate.setHours(23, 59, 59, 999);
+const DatePicker = () => {
+  const [selectedDates, setSelectedDates] = useState<Date[]>([
+    new Date(),
+    new Date(),
+  ]);
 
   return (
-    <div>
-      <Calendar
-        className={s.react_calendar}
-        // onChange={handleDateChange}
-        // value={selectedDateRange as Date | Date[]}
-        selectRange
-        maxDate={maxDate}
-      />
-    </div>
+    <RangeDatepicker
+      selectedDates={selectedDates}
+      onDateChange={setSelectedDates}
+      propsConfigs={{
+        calendarPanelProps: {
+          wrapperProps: {
+            borderColor: 'green',
+          },
+          contentProps: {
+            borderWidth: 0,
+          },
+          headerProps: {
+            padding: '5px',
+          },
+          dividerProps: {
+            display: "none",
+          },
+        },
+      }}
+    />
   );
 };
 
-export default DateRangeCalendar;
+export default DatePicker;
