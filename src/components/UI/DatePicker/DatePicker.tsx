@@ -25,7 +25,7 @@ export function DatePicker() {
     <Calendar
       value={dates}
       onSelectDate={handleSelectDate}
-      disablePastDates={true}
+      disableFutureDates={true}
     >
       <CalendarControls>
         <CalendarPrevButton />

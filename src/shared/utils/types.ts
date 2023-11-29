@@ -5,3 +5,7 @@ export interface ICategory {
   quarterlyReports: string;
   weeklyReports: string;
 }
+
+export interface IAuth {
+  setIsAuth: (value: string) => void;
+}

@@ -13,7 +13,7 @@ function App() {
 
   return (
     <div className={s.App}>
-      {!isAuth ? <AuthForm setIsAuth={setIsAuth} /> : <MainPage />}
+      {!isAuth ? <AuthForm setIsAuth={setIsAuth} /> : <MainPage setIsAuth={setIsAuth}/>}
     </div>
   );
 }
