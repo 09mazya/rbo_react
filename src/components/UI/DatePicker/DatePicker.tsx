@@ -1,34 +1,44 @@
-import { RangeDatepicker } from "chakra-dayzed-datepicker";
+import {
+  Calendar,
+  CalendarControls,
+  CalendarPrevButton,
+  CalendarNextButton,
+  CalendarMonths,
+  CalendarMonth,
+  CalendarMonthName,
+  CalendarWeek,
+  CalendarDays,
+  CalendarValues,
+  CalendarDate,
+} from "@uselessdev/datepicker";
 import { useState } from "react";
 
-const DatePicker = () => {
-  const [selectedDates, setSelectedDates] = useState<Date[]>([
-    new Date(),
-    new Date(),
-  ]);
+export function DatePicker() {
+  const [dates, setDates] = useState<CalendarValues>({});
+
+  const handleSelectDate = (value: CalendarDate | CalendarValues) => {
+    setDates(value as CalendarValues);
+  };
+
 
   return (
-    <RangeDatepicker
-      selectedDates={selectedDates}
-      onDateChange={setSelectedDates}
-      propsConfigs={{
-        calendarPanelProps: {
-          wrapperProps: {
-            borderColor: 'green',
-          },
-          contentProps: {
-            borderWidth: 0,
-          },
-          headerProps: {
-            padding: '5px',
-          },
-          dividerProps: {
-            display: "none",
-          },
-        },
-      }}
-    />
-  );
-};
+    <Calendar
+      value={dates}
+      onSelectDate={handleSelectDate}
+      disablePastDates={true}
+    >
+      <CalendarControls>
+        <CalendarPrevButton />
+        <CalendarNextButton />
+      </CalendarControls>
 
-export default DatePicker;
+      <CalendarMonths>
+        <CalendarMonth>
+          <CalendarMonthName />
+          <CalendarWeek />
+          <CalendarDays />
+        </CalendarMonth>
+      </CalendarMonths>
+    </Calendar>
+  );
+}

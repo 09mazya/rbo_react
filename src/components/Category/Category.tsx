@@ -10,31 +10,14 @@ const Category = observer(() => {
   }, []);
   const categoryData = categoryStore.category;
 
-  const categoryItems = Object.keys(categoryData).map((key: any) => {
-    let type = "";
 
-    switch (key) {
-      case "dailyReports":
-        type = "суточный";
-        break;
-      case "weeklyReports":
-        type = "недельный";
-        break;
-      case "monthlyReports":
-        type = "месячный";
-        break;
-      case "quarterlyReports":
-        type = "квартальный";
-        break;
-      case "annualReports":
-        type = "годовой";
-        break;
-      default:
-        type = ""; // Если ключ не соответствует ни одному case
-        break;
-    }
+  function getCategory(category: string){
+    reportsStore.filterReportsByType(category)
+  }
+
+  const categoryItems = Object.keys(categoryData).map((key: any) => {
     return (
-      <li key={key} onClick={() => reportsStore.filterReportsByType(type)}>
+      <li key={key} onClick={() => getCategory(categoryData[key])}>
         {categoryData[key]}
       </li>
     );

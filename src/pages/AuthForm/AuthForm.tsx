@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import Typography from "@mui/material/Typography";
+import Typography, { TypographyProps } from "@mui/material/Typography";
 import s from "./AuthForm.module.scss";
 import { useNavigate } from "react-router-dom";
 
@@ -77,17 +77,17 @@ const AuthForm: FC<AuthFormToken> = ({ setIsAuth }) => {
 
   return (
     <div className={s.auth_form}>
-      <Typography variant="h4" component="div">
+      {/* <Typography> */}
         Войдите
-      </Typography>
-      <Typography
-        variant="subtitle1"
-        component="div"
-        gutterBottom={true}
-        className={s.auth_form__subtitle}
-      >
+      {/* </Typography> */}
+      {/* <Typography */}
+        {/* // variant="subtitle1"
+        // component="div"
+        // gutterBottom={true} */}
+        {/* className={s.auth_form__subtitle} */}
+      {/* > */}
         Чтобы получить доступ
-      </Typography>
+      {/* </Typography> */}
       <form className={s.auth_form__form} onSubmit={handleSubmit}>
         <input
           type="text"

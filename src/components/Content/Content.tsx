@@ -1,6 +1,6 @@
 import React from "react";
 import s from "./Content.module.scss";
-import DatePicker from "../UI/DatePicker/DatePicker";
+import {DatePicker} from "../UI/DatePicker/DatePicker";
 import Reports from "../Reports/Reports";
 
 const Content = () => {
