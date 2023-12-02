@@ -2,18 +2,24 @@
 
 .content {
   width: 100%;
+  height: auto; 
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  flex-direction: column;
+  // border: 1px solid red;
   border-radius: 5px;
   h2 {
     text-align: center;
     padding: 10px;
     width: 100%;
     background-color: #fff;
-    @include styles_text(15px, 700);
+    @include styles_text(25px, 700, #000);
   }
   .content_block {
     background-color: #fff;
     border-radius: 10px;
     padding: 19px;
-    margin-top: 20px;
+    // margin-top: 20px;
   }
 }

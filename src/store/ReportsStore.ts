@@ -1,7 +1,11 @@
 import { makeAutoObservable, toJS } from "mobx";
 import axios, { AxiosResponse } from "axios";
+import { error } from "console";
 
 class Reports {
+  setSelectedReports(item: any): void {
+    throw new Error("Method not implemented.");
+  }
   filteredReports = [] as any;
 
   constructor() {
@@ -28,6 +32,7 @@ class Reports {
 
       if(response.data){
         this.filteredReports = response.data;
+        console.log(response.data)
       }
       
     } catch (error) {

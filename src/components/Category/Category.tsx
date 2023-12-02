@@ -10,9 +10,8 @@ const Category = observer(() => {
   }, []);
   const categoryData = categoryStore.category;
 
-
-  function getCategory(category: string){
-    reportsStore.filterReportsByType(category)
+  function getCategory(category: string) {
+    reportsStore.filterReportsByType(category);
   }
 
   const categoryItems = Object.keys(categoryData).map((key: any) => {
@@ -24,9 +23,11 @@ const Category = observer(() => {
   });
 
   return (
-    <div className={s.category_block}>
-      <div className={s.title}>Категории отчетов:</div>
-      <ul>{categoryItems}</ul>
+    <div>
+      <div className={s.category_block}>
+        <div className={s.title}>Категории отчетов:</div>
+        <p>{categoryItems}</p>
+      </div>
     </div>
   );
 });

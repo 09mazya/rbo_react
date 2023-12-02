@@ -1,14 +1,14 @@
 import { makeAutoObservable } from "mobx";
 import axios from "axios";
 
-class Category {
-  category = [];
+class EmailReports {
+  email = [];
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  async fetchCategory() {
+  async fetchEmail() {
     try {
       const authToken = localStorage.getItem("token");
 
@@ -18,7 +18,7 @@ class Category {
       }
 
       const response = await axios.get(
-        "http://10.10.91.96:8085/api/report-categories",
+        "http://10.10.91.96:8085/api/reference/email",
         {
           headers: {
             Authorization: `Bearer ${authToken}`,
@@ -27,7 +27,7 @@ class Category {
       );
 
       // console.log(response.data)
-      this.category = response.data.response;
+      this.email = response.data.response;
     } catch (error) {
       console.error("Error fetching categories:", error);
     }
@@ -35,4 +35,4 @@ class Category {
 
 }
 
-export default new Category();
+export default new EmailReports();

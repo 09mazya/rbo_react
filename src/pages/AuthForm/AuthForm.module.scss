@@ -1,3 +1,4 @@
+
 .auth_form {
     width: 98vw;
     height: 95vh;
@@ -11,10 +12,17 @@
     @media (max-width: 768px) {
         padding: 10px;
     }
+    .title{
+      color: #1976d2;
+    }
+    .title5{
+      color: #000000;
+      opacity: 0.5;
+    }
   }
   
   .auth_form__subtitle {
-    color: rgb(188, 184, 193);
+    color: rgb(0, 0, 0);
   }
   
   .auth_form__form {

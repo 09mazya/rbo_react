@@ -4,6 +4,22 @@
     margin-top: 10px;
   h2 {
     text-align: start;
-    @include styles_text(14px, 600);
+    @include styles_text(18px, 600, #000);
+  }
+  p {
+    @include styles_text(18px, 400, #000);
+  }
+  .reports_content{
+    width: auto;
+    height: 18vh;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    color: #000;
+
+    .report_button  Button{
+      border: 1px solid #f1f1f1;
+      @include styles_text(15px, 100, #000);
+    }
   }
 }

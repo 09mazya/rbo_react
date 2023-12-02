@@ -1,9 +1,13 @@
 @import "../../shared//variable.scss";
 
 .category_block {
-  padding: 20px;
-  padding-top: 0;
+
+  padding: 18px;
+  padding-top: 15px;
   border-radius: 20px;
+  // background-color: #f1f1f1;
+  width: 100%;
+  height: auto;
 
   .title {
     text-align: center;
@@ -12,17 +16,17 @@
     padding: 10px;
     background: #31b465;
 
-    @include styles_text(16px, 700);
+    @include styles_text(20x, 700 , #000);
     color: #fff;
   }
   li {
     cursor: pointer;
     padding: 10px;
-    background-color: #fff;
+    background-color: #f1f1f1;
     border-radius: 5px;
     margin-bottom: 22px;
     list-style: none;
     text-align: center;
-    @include styles_text(14px, 600);
+    @include styles_text(18px, 600 , #000 );
   }
 }

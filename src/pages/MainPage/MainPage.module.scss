@@ -1,11 +1,12 @@
 @import "../../shared//variable.scss";
 
-.content {
-  margin-top: 38px;
-  padding: 39px;
-  width: 100%;
-  display: grid;
-  grid-template-columns: 30% 50% 20%;
-  grid-template-areas: "category contentArea instructions";
-  gap: 10px;
-}
+
+  
+  .content {
+    margin-top: 38px;
+    padding: 40px 30px;
+    display: grid;
+    grid-template-columns: 19% 60% 19%;
+    grid-template-areas: "category contentArea instructions";
+    gap: 15px;
+  }

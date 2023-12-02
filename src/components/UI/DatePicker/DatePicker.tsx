@@ -1,44 +1,31 @@
-import {
-  Calendar,
-  CalendarControls,
-  CalendarPrevButton,
-  CalendarNextButton,
-  CalendarMonths,
-  CalendarMonth,
-  CalendarMonthName,
-  CalendarWeek,
-  CalendarDays,
-  CalendarValues,
-  CalendarDate,
-} from "@uselessdev/datepicker";
-import { useState } from "react";
+import React, { useState } from "react";
+import dayjs from "dayjs";
+import { DatePicker, Space } from "antd";
+import { observer } from "mobx-react-lite";
+import dataRangeStore from "../../../store/DateRangeStore"; // Импортируйте ваш MobX store
 
-export function DatePicker() {
-  const [dates, setDates] = useState<CalendarValues>({});
+const { RangePicker } = DatePicker;
 
-  const handleSelectDate = (value: CalendarDate | CalendarValues) => {
-    setDates(value as CalendarValues);
+export const DataPickerReport = observer(() => {
+  const [dates, setDates] = useState(null);
+
+  const handleDateChange = (values: any) => {
+    if (values) {
+      setDates(values.map((item: number) => dayjs(item).format("DD-MM-YYYY")));
+      dataRangeStore.setStart(values[0]);
+      dataRangeStore.setEnd(values[1]);
+    } else {
+      setDates(null);
+      dataRangeStore.setStart(null);
+      dataRangeStore.setEnd(null);
+    }
   };
 
-
   return (
-    <Calendar
-      value={dates}
-      onSelectDate={handleSelectDate}
-      disableFutureDates={true}
-    >
-      <CalendarControls>
-        <CalendarPrevButton />
-        <CalendarNextButton />
-      </CalendarControls>
-
-      <CalendarMonths>
-        <CalendarMonth>
-          <CalendarMonthName />
-          <CalendarWeek />
-          <CalendarDays />
-        </CalendarMonth>
-      </CalendarMonths>
-    </Calendar>
+    <div>
+      <RangePicker  onChange={handleDateChange} />
+    </div>
   );
-}
+});
+
+export default DataPickerReport;

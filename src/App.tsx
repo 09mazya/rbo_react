@@ -4,7 +4,9 @@ import { AuthForm } from "./pages/AuthForm/AuthForm";
 import MainPage from "./pages/MainPage/MainPage";
 
 function App() {
-  const [isAuth, setIsAuth] = useState<string | null>(localStorage.getItem("token"));
+  const [isAuth, setIsAuth] = useState<string | null>(
+    localStorage.getItem("token")
+  );
 
   useEffect(() => {
     const authToken = localStorage.getItem("token");
@@ -13,7 +15,11 @@ function App() {
 
   return (
     <div className={s.App}>
-      {!isAuth ? <AuthForm setIsAuth={setIsAuth} /> : <MainPage setIsAuth={setIsAuth}/>}
+      {!isAuth ? (
+        <AuthForm setIsAuth={setIsAuth} />
+      ) : (
+        <MainPage setIsAuth={setIsAuth} />
+      )}
     </div>
   );
 }

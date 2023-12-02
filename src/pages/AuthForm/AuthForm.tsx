@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import Typography, { TypographyProps } from "@mui/material/Typography";
+import { Typography } from 'antd';
 import s from "./AuthForm.module.scss";
 import { useNavigate } from "react-router-dom";
 
@@ -12,7 +12,7 @@ interface ApiResponse {
 interface AuthFormToken {
   setIsAuth: (value: string) => void;
 }
-
+const { Title } = Typography;
 const AuthForm: FC<AuthFormToken> = ({ setIsAuth }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -77,17 +77,8 @@ const AuthForm: FC<AuthFormToken> = ({ setIsAuth }) => {
 
   return (
     <div className={s.auth_form}>
-      {/* <Typography> */}
-        Войдите
-      {/* </Typography> */}
-      {/* <Typography */}
-        {/* // variant="subtitle1"
-        // component="div"
-        // gutterBottom={true} */}
-        {/* className={s.auth_form__subtitle} */}
-      {/* > */}
-        Чтобы получить доступ
-      {/* </Typography> */}
+      <Title className={s.title} level={3}>Войдите</Title>
+      <Title className={s.title5} level={5}>Чтобы получить доступ</Title>
       <form className={s.auth_form__form} onSubmit={handleSubmit}>
         <input
           type="text"

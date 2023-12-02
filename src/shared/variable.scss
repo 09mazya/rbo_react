@@ -1,5 +1,5 @@
-@mixin styles_text($font_size, $font_weigth) {
-    color: #000;
+@mixin styles_text($font_size, $font_weigth , $color) {
+    color: $color;
 
     font-family: Inter;
     font-size: $font_size;
