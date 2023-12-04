@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import s from "./Reports.module.scss";
 import { observer } from "mobx-react-lite";
 import reportsStore from "../../store/ReportsStore";
-import { Select } from "antd";
+
+import dateRangeStore from '../../store/DateRangeStore';
 
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
@@ -10,17 +11,26 @@ import MenuItem from "@mui/material/MenuItem";
 
 const Reports: React.FC = observer(() => {
   const { filteredReports } = reportsStore;
+  const [anchorEls, setAnchorEls] = useState<{
+    [key: string]: HTMLElement | null;
+  }>({});
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [selectedItem, setSelectedItem] = useState(null);
-  const open = Boolean(anchorEl);;
+  const handleOpenMenu = (
+    event: React.MouseEvent<HTMLElement>,
+    key: string
+  ) => {
+    setAnchorEls((prev) => ({ ...prev, [key]: event.currentTarget }));
+  };
 
-  const handleClick = (event : any) => {
-    setSelectedItem(null)
-    setAnchorEl(event.currentTarget);
-};
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleCloseMenu = (key: string) => {
+    setAnchorEls((prev) => ({ ...prev, [key]: null }));
+  };
+
+  const selectOption = (key: string, sheetName: string) => {
+    setSelectedOption(`${key}-${sheetName}`);
+    handleCloseMenu(key);
+    // Дополнительные действия при выборе опции, если необходимо
   };
 
   return (
@@ -32,28 +42,23 @@ const Reports: React.FC = observer(() => {
             {Object.keys(filteredReports.response).map((key: string) => (
               <div className={s.report_button} key={key}>
                 <Button
-                className="accatTitle"
-                id="basic-button"
-                // disabled={!arr.length}
-                aria-controls={open ? 'basic-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-                onClick={handleClick}
+                  onClick={(event) => handleOpenMenu(event, key)}
+                  aria-controls={`${key}-menu`}
+                  aria-haspopup="true"
                 >
                   {key}
                 </Button>
                 <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
+                  // id={`${key}-menu`}z
+                  anchorEl={anchorEls[key]}
+                  open={Boolean(anchorEls[key])}
+                  onClose={() => handleCloseMenu(key)}
                 >
                   {filteredReports.response[key].map((item: any) => (
                     <MenuItem
                       key={item.id}
-                      onClick={() => reportsStore.setSelectedReports(item)}
+                      onClick={() => selectOption(key, item.sheetName)}
                     >
-                      <input type="checkbox" readOnly />
                       {item.sheetName}
                     </MenuItem>
                   ))}
@@ -70,7 +75,6 @@ const Reports: React.FC = observer(() => {
 });
 
 export default Reports;
-
 // {filteredReports.response ? (
 //   <>
 //     {Object.keys(filteredReports.response).map((key: string) => (

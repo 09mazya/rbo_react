@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { DatePicker, Space } from "antd";
 import { observer } from "mobx-react-lite";
 import dataRangeStore from "../../../store/DateRangeStore"; // Импортируйте ваш MobX store
@@ -23,8 +23,8 @@ export const DataPickerReport = observer(() => {
 
   return (
     <div>
-      <RangePicker  onChange={handleDateChange} />
-    </div>
+      <RangePicker disabledDate={(currentData: Dayjs)=> currentData > dayjs()} onChange={handleDateChange} />
+    </div> 
   );
 });
 
