@@ -32,7 +32,7 @@ class Reports {
 
       if(response.data){
         this.filteredReports = response.data;
-        console.log(response.data)
+        // console.log(response.data)
       }
       
     } catch (error) {
