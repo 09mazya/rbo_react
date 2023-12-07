@@ -1,0 +1,22 @@
+@import ".../../../../../shared/variable.scss";
+
+.report_button {
+
+    padding: 10px 20px;
+    background-color: #198754;
+    color: white;
+    @include styles_text(18px, 100, white);
+    cursor: pointer;
+    border: none;
+    border-radius: 15px;
+
+}
+
+.report_button:hover {
+
+    background-color: #166e45;
+    border: none;
+    border-radius: 15px;
+    @include styles_text(18px, 500, rgb(255, 255, 255));
+
+}

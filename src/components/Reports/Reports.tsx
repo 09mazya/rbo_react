@@ -4,13 +4,15 @@ import { observer } from "mobx-react-lite";
 import reportsStore from "../../store/ReportsStore";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-
+import dataRangeStore from '../../store/DateRangeStore'
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
 const Reports: React.FC = observer(() => {
   const { filteredReports } = reportsStore;
+  const selectedReports = dataRangeStore.selectedReports
+  
   const [anchorEls, setAnchorEls] = useState<{
     [key: string]: HTMLElement | null;
   }>({});
@@ -88,7 +90,10 @@ const Reports: React.FC = observer(() => {
                   {filteredReports.response[key].map((item: any) => (
                     <MenuItem
                       key={item.id}
-                      onClick={() => handleMenuItemClick(key, item.sheetName)}
+                      onClick={() => {
+                        handleMenuItemClick(key, item.sheetName)
+                        dataRangeStore.setSelectedReports(item)
+                      }}
                     >
                       <input
                         type="checkbox"

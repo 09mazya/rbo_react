@@ -1,43 +1,31 @@
 @import ".../../../../../shared/variable.scss";
 
 .email {
-    height: 8vh;
+    height: 10vh;
     display: flex;
     justify-content: space-evenly;
-    // border: 1px solid red;
+    flex-direction: column;
     align-items: center;
-
+    // border: 1px solid red;
+    p {
+        @include styles_text(20px, 100, #000);
+    }
     .emailInput {
+        width: 100%;
+        height: 8vh;
+        display: flex;
+        justify-content: left;
+        // border: 1px solid rgb(0, 0, 0);
+        align-items: center;
+        gap: 20px;
 
-        p {
-            @include styles_text(20px, 100, #000);
-        }
 
         input {
-            width: 100%;
+            width: 80%;
             height: 4vh;
             @include styles_text(20px, 100, #000);
         }
     }
 
-    .report_button {
 
-        button {
-            margin-top: 23px;
-            padding: 10px 20px;
-            background-color: #198754;
-            color: white;
-            @include styles_text(18px, 100, white);
-            cursor: pointer;
-            border: none;
-            border-radius: 15px;
-        }
-
-        :hover {
-            background-color: #166e45;
-            border: none;
-            border-radius: 15px;
-            @include styles_text(18px, 500, rgb(255, 255, 255));
-        }
-    }
 }

@@ -15,12 +15,12 @@ class DateRangeStore {
 
     setStart(date: any) {
         this.dateFrom = date
+        // console.log(date)
     }
 
     setEnd(date: any) {
         this.dateTo = date
     }
-
 
     toJSON() {
         return {
@@ -30,6 +30,7 @@ class DateRangeStore {
         };
     }
     clear() {
+        console.log("rabotaet")
         this.selectedReports = [];
         this.dateFrom = null;
         this.dateTo = null;
@@ -39,3 +40,5 @@ class DateRangeStore {
 const dateRangeStore = new DateRangeStore();
 
 export default dateRangeStore;
+
+

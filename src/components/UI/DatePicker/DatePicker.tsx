@@ -2,28 +2,27 @@ import React, { useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { DatePicker, Space } from "antd";
 import { observer } from "mobx-react-lite";
-import dataRangeStore from "../../../store/DateRangeStore"; // Импортируйте ваш MobX store
+import dateRangeStore from "../../../store/DateRangeStore"; // Импортируйте ваш MobX store
 
 const { RangePicker } = DatePicker;
 
 export const DataPickerReport = observer(() => {
-  const [dates, setDates] = useState(null);
+  const dateFrom = dateRangeStore.dateFrom;
+  const dateTo = dateRangeStore.dateTo;
 
   const handleDateChange = (values: any) => {
     if (values) {
-      setDates(values.map((item: number) => dayjs(item).format("DD-MM-YYYY")));
-      dataRangeStore.setStart(values[0]);
-      dataRangeStore.setEnd(values[1]);
+      dateRangeStore.setStart(values[0]);
+      dateRangeStore.setEnd(values[1]);
     } else {
-      setDates(null);
-      dataRangeStore.setStart(null);
-      dataRangeStore.setEnd(null);
+      dateRangeStore.setStart(null);
+      dateRangeStore.setEnd(null);
     }
   };
-
+  
   return (
     <div>
-      <RangePicker disabledDate={(currentData: Dayjs)=> currentData > dayjs()} onChange={handleDateChange} />
+      <RangePicker value={[dateTo, dateFrom]} disabledDate={(currentData: Dayjs)=> currentData > dayjs()} onChange={handleDateChange} />
     </div> 
   );
 });
