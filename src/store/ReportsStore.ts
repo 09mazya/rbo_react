@@ -1,6 +1,6 @@
 import { makeAutoObservable, toJS } from "mobx";
 import axios, { AxiosResponse } from "axios";
-import { error } from "console";
+
 
 class Reports {
   setSelectedReports(item: any): void {

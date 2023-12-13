@@ -1,70 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import s from "./Reports.module.scss";
 import { observer } from "mobx-react-lite";
 import reportsStore from "../../store/ReportsStore";
 import Snackbar from "@mui/material/Snackbar";
-import MuiAlert from "@mui/material/Alert";
-import dataRangeStore from '../../store/DateRangeStore'
-import Button from "@mui/material/Button";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
+import dataRangeStore from "../../store/DateRangeStore";
+import { Select, Space } from "antd";
 
 const Reports: React.FC = observer(() => {
   const { filteredReports } = reportsStore;
-  const selectedReports = dataRangeStore.selectedReports
-  
-  const [anchorEls, setAnchorEls] = useState<{
-    [key: string]: HTMLElement | null;
-  }>({});
-  const [selectedOptions, setSelectedOptions] = useState<{
-    [key: string]: string | null;
-  }>({});
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [selectedReport, setSelectedReport] = useState<string | null>(null);
 
-  const handleOpenMenu = (
-    event: React.MouseEvent<HTMLElement>,
-    key: string
-  ) => {
-    setAnchorEls((prev) => ({ ...prev, [key]: event.currentTarget }));
-  };
+  const [selectedValues, setSelectedValues] = useState<Record<string, string>>({});
 
-  const handleCloseMenu = (key: string) => {
-    setAnchorEls((prev) => ({ ...prev, [key]: null }));
-  };
-
-  const handleMenuItemClick = (key: string, sheetName: string) => {
-    setSelectedOptions((prev) => {
-      const newSelectedOptions = {
-        ...prev,
-        [key]: prev[key] === sheetName ? null : sheetName,
-      };
-
-      // Обнуляем предыдущий выбор
-      Object.keys(newSelectedOptions).forEach((otherKey) => {
-        if (otherKey !== key) {
-          newSelectedOptions[otherKey] = null;
-        }
+  useEffect(() => {
+    if (filteredReports.response) {
+      // Устанавливаем значение по умолчанию для каждого key
+      const defaultValues: Record<string, string> = {};
+      Object.keys(filteredReports.response).forEach((key) => {
+        defaultValues[key] = key;
       });
+      setSelectedValues(defaultValues);
+    }
+  }, [filteredReports.response]);
 
-      return newSelectedOptions;
+  const handleChange = (key: string, value: string) => {
+    // Сохраняем выбранное значение для текущего Select
+    setSelectedValues((prev) => ({ ...prev, [key]: value }));
+
+    // Возвращаем другим Select к значению по умолчанию (key)
+    Object.keys(selectedValues).forEach((otherKey) => {
+      if (otherKey !== key) {
+        setSelectedValues((prev) => ({ ...prev, [otherKey]: otherKey }));
+      }
     });
 
-    if (selectedOptions[key] === sheetName) {
-      setSnackbarOpen(false);
-      setSelectedReport(null);
-    } else {
-      setSnackbarOpen(true);
-      setSelectedReport(sheetName);
-    }
-
-    handleCloseMenu(key);
-    // Дополнительные действия при выборе опции, если необходимо
+    dataRangeStore.setSheetName(value)
   };
-
-  const handleSnackbarClose = () => {
-    setSnackbarOpen(false);
-  };
+  
 
   return (
     <div className={s.reports}>
@@ -74,37 +45,17 @@ const Reports: React.FC = observer(() => {
           <>
             {Object.keys(filteredReports.response).map((key: string) => (
               <div className={s.report_button} key={key}>
-                <Button
-                  onClick={(event) => handleOpenMenu(event, key)}
-                  aria-controls={`${key}-menu`}
-                  aria-haspopup="true"
-                >
-                  {key}
-                </Button>
-                <Menu
-                  id={`${key}-menu`}
-                  anchorEl={anchorEls[key]}
-                  open={Boolean(anchorEls[key])}
-                  onClose={() => handleCloseMenu(key)}
-                >
-                  {filteredReports.response[key].map((item: any) => (
-                    <MenuItem
-                      key={item.id}
-                      onClick={() => {
-                        handleMenuItemClick(key, item.sheetName)
-                        dataRangeStore.setSelectedReports(item)
-                      }}
-                    >
-                      <input
-                        type="checkbox"
-                        name={`${key}-checkbox`}
-                        checked={selectedOptions[key] === item.sheetName}
-                        readOnly
-                      />
-                      {item.sheetName}
-                    </MenuItem>
-                  ))}
-                </Menu>
+                  <Select
+                    value={selectedValues[key]}
+                    style={{ width: 150 }}
+                    onChange={(value) => handleChange(key, value)}
+                  >
+                    {filteredReports.response[key].map((item: any) => (
+                      <Select.Option key={item.sheetName} value={item.sheetName}>
+                        {item.sheetName} 
+                      </Select.Option>
+                    ))}
+                  </Select>
               </div>
             ))}
           </>
@@ -112,39 +63,8 @@ const Reports: React.FC = observer(() => {
           <p>Выберите категорию отчёта в левом окне</p>
         )}
       </div>
-
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={3000}
-        onClose={handleSnackbarClose}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }} // Устанавливаем расположение top-center
-        className={s.snack_bar}
-      >
-        <div>Выбран отчет: {selectedReport}</div>
-      </Snackbar>
     </div>
   );
 });
 
 export default Reports;
-// {filteredReports.response ? (
-//   <>
-//     {Object.keys(filteredReports.response).map((key: string) => (
-//       <div key={key}>
-//         <Select
-//           style={{ width: 200 }}
-//           placeholder={`${key}`}
-//           onChange={() => openBlock(key)}
-//         >
-//           {filteredReports.response[key].map((item: any) => (
-//             <Option key={item.id} value={item.sheetName}>
-//               {item.sheetName} - {item.status}
-//             </Option>
-//           ))}
-//         </Select>
-//       </div>
-//     ))}
-//   </>
-// ) : (
-//   <>Выберите категорию отчёта в левом окне</>
-// )}

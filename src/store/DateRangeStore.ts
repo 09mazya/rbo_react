@@ -1,16 +1,14 @@
 import { makeAutoObservable } from "mobx";
 
 class DateRangeStore {
-    selectedReports = [];
     dateFrom = null;
     dateTo = null;
+    sheetName = "";
+
+
 
     constructor() {
         makeAutoObservable(this);
-    }
-
-    setSelectedReports(item: any) {
-        this.selectedReports = item.sheetName
     }
 
     setStart(date: any) {
@@ -22,18 +20,21 @@ class DateRangeStore {
         this.dateTo = date
     }
 
+    setSheetName(code: string){
+        this.sheetName = code
+    }
+
     toJSON() {
         return {
-            sheetName: this.selectedReports,
             dateFrom: this.dateFrom,
-            dateTo: this.dateTo
+            dateTo: this.dateTo,
+            sheetName: this.sheetName
         };
     }
     clear() {
-        console.log("rabotaet")
-        this.selectedReports = [];
         this.dateFrom = null;
         this.dateTo = null;
+        this.sheetName = "";
     }
 }
 

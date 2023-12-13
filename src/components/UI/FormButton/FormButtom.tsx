@@ -16,50 +16,45 @@ const FormButton: React.FC = observer(() => {
   const dateTo = dateRangeStore.dateTo;
 
   const handleGenerateClick = () => {
-    const sheetName = dateRangeStore.selectedReports;
+    const sheetName = dateRangeStore.sheetName;
     const dateFrom = dateRangeStore.dateFrom;
     const dateTo = dateRangeStore.dateTo;
 
     const formattedDateFrom = dayjs(dateFrom).format("YYYY-MM-DD");
     const formattedDateTo = dayjs(dateTo).format("YYYY-MM-DD");
 
-    const jsonData = {
-      sheetName,
-      dateFrom: formattedDateFrom,
-      dateTo: formattedDateTo,
-    };
-    if (!sheetName.length || !dateFrom || !dateTo) {
-      console.log("ebani ещё raz");
-      dateRangeStore.clear();
-      return;
+    if(sheetName && dateFrom && dateTo){
+      const apiUrlreport = "http://10.10.91.96:8085/api/report";
+
+      axios
+        .post(apiUrlreport, {
+          sheetName,
+          dateFrom: formattedDateFrom,
+          dateTo: formattedDateTo,
+        }, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          const data = response.data;
+          if (data && data.response) {
+            setSelectedReport(data.response);
+            setSnackbarOpen(true);
+          } else {
+            console.error(
+              "Ошибка получения данных:",
+              data.error || "Неизвестная ошибка"
+            );
+          }
+        })
+        .catch((error) => {
+          console.error("Произошла ошибка при выполнении POST-запроса:", error);
+        });
+
+        dateRangeStore.clear()
     }
-    const jsonString = JSON.stringify(jsonData);
-
-    const apiUrlreport = "http://10.10.91.96:8085/api/report";
-
-    axios
-      .post(apiUrlreport, jsonString, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => {
-        const data = response.data;
-        if (data && data.response) {
-          console.log(data.response);
-          setSelectedReport(data.response);
-          setSnackbarOpen(true);
-        } else {
-          console.error(
-            "Ошибка получения данных:",
-            data.error || "Неизвестная ошибка"
-          );
-        }
-      })
-      .catch((error) => {
-        console.error("Произошла ошибка при выполнении POST-запроса:", error);
-      });
       
   };
   const handleSnackbarClose = () => {

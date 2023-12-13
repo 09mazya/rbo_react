@@ -10,7 +10,7 @@
     @include styles_text(18px, 400, #000);
   }
   .reports_content{
-    width: auto;
+    width: 100%;
     height: 18vh;
     display: flex;
     justify-content: space-evenly;
@@ -22,6 +22,5 @@
       @include styles_text(15px, 100, #000);
     }
   }
-  .snack_bar{
-  }
+
 }
