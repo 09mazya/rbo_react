@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { DatePicker, Space } from "antd";
 import { observer } from "mobx-react-lite";
-import dateRangeStore from "../../../store/DateRangeStore"; // Импортируйте ваш MobX store
+import dateRangeStore from "../../../store/DateAndSheetName"; // Импортируйте ваш MobX store
 
 const { RangePicker } = DatePicker;
 

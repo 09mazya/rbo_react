@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import dateRangeStore from "../../../store/DateRangeStore";
+import dateAndSheetName from "../../../store/DateAndSheetName";
 import dayjs from "dayjs";
 import { observer } from "mobx-react-lite";
 import Snackbar from "@mui/material/Snackbar";
@@ -12,13 +12,13 @@ const FormButton: React.FC = observer(() => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [selectedReport, setSelectedReport] = useState<string | null>(null);
 
-  const dateFrom = dateRangeStore.dateFrom;
-  const dateTo = dateRangeStore.dateTo;
+  const dateFrom = dateAndSheetName.dateFrom;
+  const dateTo = dateAndSheetName.dateTo;
 
   const handleGenerateClick = () => {
-    const sheetName = dateRangeStore.sheetName;
-    const dateFrom = dateRangeStore.dateFrom;
-    const dateTo = dateRangeStore.dateTo;
+    const sheetName = dateAndSheetName.sheetName;
+    const dateFrom = dateAndSheetName.dateFrom;
+    const dateTo = dateAndSheetName.dateTo;
 
     const formattedDateFrom = dayjs(dateFrom).format("YYYY-MM-DD");
     const formattedDateTo = dayjs(dateTo).format("YYYY-MM-DD");
@@ -42,6 +42,8 @@ const FormButton: React.FC = observer(() => {
           if (data && data.response) {
             setSelectedReport(data.response);
             setSnackbarOpen(true);
+            dateAndSheetName.clear()
+            dateAndSheetName.isCleared = false
           } else {
             console.error(
               "Ошибка получения данных:",
@@ -53,7 +55,9 @@ const FormButton: React.FC = observer(() => {
           console.error("Произошла ошибка при выполнении POST-запроса:", error);
         });
 
-        dateRangeStore.clear()
+        dateAndSheetName.clear()
+    } else {
+      dateAndSheetName.clear()
     }
       
   };

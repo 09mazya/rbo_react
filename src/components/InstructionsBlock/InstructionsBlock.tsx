@@ -1,4 +1,3 @@
-import React from "react";
 import s from "./InstructionsBlock.module.scss";
 
 const InstructionsBlock = () => {
@@ -18,12 +17,3 @@ const InstructionsBlock = () => {
 
 
 export default InstructionsBlock;
-
-
-
-        {/* <p>
-          Дата начала и дата закрытия – выбирается пользователем. Дата закрытия
-          может быть больше сегодняшнего дня на 14 дней. При недельных отчетах
-          Пользователь может задать диапазон только 1 неделю: с понедельника по
-          воскресенье
-        </p> */}

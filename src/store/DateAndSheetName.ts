@@ -1,9 +1,10 @@
 import { makeAutoObservable } from "mobx";
 
-class DateRangeStore {
+class DateAndSheetName {
     dateFrom = null;
     dateTo = null;
     sheetName = "";
+    isCleared = false
 
 
 
@@ -29,17 +30,19 @@ class DateRangeStore {
             dateFrom: this.dateFrom,
             dateTo: this.dateTo,
             sheetName: this.sheetName
+
         };
     }
     clear() {
         this.dateFrom = null;
         this.dateTo = null;
         this.sheetName = "";
+        this.isCleared = true;
     }
 }
 
-const dateRangeStore = new DateRangeStore();
+const dateAndSheetName = new DateAndSheetName();
 
-export default dateRangeStore;
+export default dateAndSheetName;
 
 
