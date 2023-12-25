@@ -20,3 +20,9 @@
     @include styles_text(18px, 500, rgb(255, 255, 255));
 
 }
+.snackbar{
+    border-radius: 15px ;
+    padding: 10px 20px;
+    background-color: #166e45;
+    @include styles_text(18px, 500, rgb(255, 255, 255));
+}

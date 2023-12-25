@@ -4,18 +4,20 @@ import { observer } from "mobx-react-lite";
 import reportsStore from "../../store/ReportsStore";
 import Snackbar from "@mui/material/Snackbar";
 import dataRangeStore from "../../store/DateAndSheetName";
-import { Select } from "antd";
+import { Flex, Select } from "antd";
 
 const Reports: React.FC = observer(() => {
   const { filteredReports } = reportsStore;
+  const { sheetName } = dataRangeStore;
 
-  const [selectedValues, setSelectedValues] = useState<Record<string, string>>({});
-  const [selectedReport, setSelectedReport] = useState<string | null>(null); // Добавленное состояние для отслеживания выбранного отчета
+  const [selectedValues, setSelectedValues] = useState<Record<string, string>>(
+    {}
+  );
+  const [selectedReport, setSelectedReport] = useState<string | null>(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   useEffect(() => {
     if (filteredReports.response) {
-      // Устанавливаем значение по умолчанию для каждого key
       const defaultValues: Record<string, string> = {};
       Object.keys(filteredReports.response).forEach((key) => {
         defaultValues[key] = key;
@@ -24,18 +26,14 @@ const Reports: React.FC = observer(() => {
     }
   }, [filteredReports.response]);
 
-  const handleChange = (key: string, value: string) => {
-    // setSelectedValues((prev) => ({ ...prev, [key]: value }));
-
-    // Object.keys(selectedValues).forEach((otherKey) => {
-    //   if (otherKey !== key) {
-    //     setSelectedValues((prev) => ({ ...prev, [otherKey]: otherKey }));
-    //   }
-    // });
-
+  const handleChange = (value: string) => {
+    if (sheetName == value) {
+      dataRangeStore.setSheetName("");
+      return;
+    }
     dataRangeStore.setSheetName(value);
-    setSelectedReport(value); // Обновляем выбранный отчет
-    setSnackbarOpen(true); // Открываем Snackbar при изменении отчета
+    setSelectedReport(value);
+    setSnackbarOpen(true);
   };
 
   const handleSnackbarClose = () => {
@@ -48,30 +46,61 @@ const Reports: React.FC = observer(() => {
       <div className={s.reports_content}>
         {filteredReports.response ? (
           <>
-            {Object.keys(filteredReports.response).map((key: string) => (
-              <div className={s.report_button} key={key}>
-                <Select
-                  value={selectedValues[key]}
-                  style={{ width: 150 }}
-                  onChange={(value) => handleChange(key, value)}
-                  key={key}
-                >
-                  {filteredReports.response[key].map((item: any) => (
-                    <Select.Option key={item.sheetName} value={item.sheetName}>
-                      {item.sheetName}
-                    </Select.Option>
-                  ))}
-                </Select>
-              </div>
-            ))}
+            {filteredReports.response &&
+            Object.keys(filteredReports.response).length > 0 ? (
+              <>
+                {Object.keys(filteredReports.response).map((key: string) => (
+                  <div className={s.report_button} key={key}>
+                    <Select
+                      value={selectedValues[key]}
+                      style={{ width: 150, display: "flex" }}
+                      onChange={(value) => handleChange(value)}
+                      key={key}
+                    >
+                      {filteredReports.response[key].map((item: any) => (
+                        <Select.Option
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-evenly",
+                          }}
+                          key={item.sheetName}
+                        >
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-beetwin",
+                              gap: 15,
+                              height: 20
+                            }}
+                          >
+                            <input
+                              type="checkbox"
+                              checked={sheetName === item.sheetName}
+                            />
+                            <div>{item.sheetName}</div>
+                          </div>
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </div>
+                ))}
+              </>
+            ) : (
+              <p>
+                {filteredReports.response
+                  ? "Нет отчетов для выбранной категории"
+                  : filteredReports.response}
+              </p>
+            )}
           </>
         ) : (
           <p>Выберите категорию отчёта в левом окне</p>
         )}
       </div>
       <Snackbar
+      className={s.snackbarReports}
         open={snackbarOpen}
-        autoHideDuration={3000}
+        autoHideDuration={5000}
         onClose={handleSnackbarClose}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >

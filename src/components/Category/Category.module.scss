@@ -29,4 +29,9 @@
     text-align: center;
     @include styles_text(18px, 600 , #000 );
   }
+  .selected{
+    background: #31b465;
+    @include styles_text(20x, 700 , #ffffff);
+    transition: 1.5s;
+  }
 }

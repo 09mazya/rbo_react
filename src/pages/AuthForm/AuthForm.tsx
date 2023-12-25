@@ -14,7 +14,7 @@ interface AuthFormToken {
 }
 const { Title } = Typography;
 const AuthForm: FC<AuthFormToken> = ({ setIsAuth }) => {
-  const [email, setEmail] = useState("");
+  const [login, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessageLogin, setErrorMessageLogin] = useState("");
   const [errorMessagePssword, setErrorMessagePassword] = useState("");
@@ -23,7 +23,7 @@ const AuthForm: FC<AuthFormToken> = ({ setIsAuth }) => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!email) {
+    if (!login) {
       setErrorMessageLogin("Введите логин");
       return;
     }
@@ -33,7 +33,7 @@ const AuthForm: FC<AuthFormToken> = ({ setIsAuth }) => {
       return;
     }
 
-    if (/^[А-Яа-яЁё]+$/.test(email)) {
+    if (/^[А-Яа-яЁё]+$/.test(login)) {
       setErrorMessagePassword("Неверный логин или пароль");
       return;
     }
@@ -45,7 +45,7 @@ const AuthForm: FC<AuthFormToken> = ({ setIsAuth }) => {
 
     const url = "https://rboapi.cbk.kg/auth/getToken";
     const payload = {
-      username: email,
+      username: login,
       password: password,
     };
 
@@ -82,9 +82,9 @@ const AuthForm: FC<AuthFormToken> = ({ setIsAuth }) => {
       <form className={s.auth_form__form} onSubmit={handleSubmit}>
         <input
           type="text"
-          id="email"
-          name="email"
-          value={email}
+          id="login"
+          name="login"
+          value={login}
           placeholder="Логин"
           onChange={(event) => setEmail(event.target.value)}
           autoComplete="username"

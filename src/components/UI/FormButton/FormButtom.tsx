@@ -23,27 +23,31 @@ const FormButton: React.FC = observer(() => {
     const formattedDateFrom = dayjs(dateFrom).format("YYYY-MM-DD");
     const formattedDateTo = dayjs(dateTo).format("YYYY-MM-DD");
 
-    if(sheetName && dateFrom && dateTo){
+    if (sheetName && dateFrom && dateTo) {
       const apiUrlreport = "http://10.10.91.96:8085/api/report";
 
       axios
-        .post(apiUrlreport, {
-          sheetName,
-          dateFrom: formattedDateFrom,
-          dateTo: formattedDateTo,
-        }, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
+        .post(
+          apiUrlreport,
+          {
+            sheetName,
+            dateFrom: formattedDateFrom,
+            dateTo: formattedDateTo,
           },
-        })
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        )
         .then((response) => {
           const data = response.data;
           if (data && data.response) {
             setSelectedReport(data.response);
             setSnackbarOpen(true);
-            dateAndSheetName.clear()
-            dateAndSheetName.isCleared = false
+            dateAndSheetName.clear();
+            dateAndSheetName.isCleared = false;
           } else {
             console.error(
               "Ошибка получения данных:",
@@ -55,18 +59,24 @@ const FormButton: React.FC = observer(() => {
           console.error("Произошла ошибка при выполнении POST-запроса:", error);
         });
 
-        dateAndSheetName.clear()
-    } else {
-      dateAndSheetName.clear()
+      dateAndSheetName.clear();
+    } else if (!sheetName && dateFrom === null && dateTo === null) {
+      setSelectedReport("Укажите дату и Выберите необходимую форму отчёта");
+      setSnackbarOpen(true);
+    } else if (dateFrom === null && dateTo === null) {
+      setSelectedReport("Укажите дату");
+      setSnackbarOpen(true);
+    } else if (!sheetName) {
+      setSelectedReport("Выберите необходимую форму отчёта");
+      setSnackbarOpen(true);
     }
-      
   };
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
   };
 
-  console.log(dateFrom, dateTo);
-  
+  // console.log(dateFrom, dateTo);
+
   return (
     <div>
       <div>
@@ -75,10 +85,11 @@ const FormButton: React.FC = observer(() => {
         </button>
       </div>
       <Snackbar
+        className={s.snackbar}
         open={snackbarOpen}
-        autoHideDuration={3000}
+        autoHideDuration={4000}
         onClose={handleSnackbarClose}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }} 
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <div>{selectedReport}</div>
       </Snackbar>
